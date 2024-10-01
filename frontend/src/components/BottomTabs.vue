@@ -54,5 +54,10 @@ const tabItems = [
 		title: "Salary",
 		route: "/dashboard/salary-slips",
 	},
+	{
+		icon: LeaveIcon,
+		title: "Attendance",
+		route: "/dashboard/attendance",
+	},
 ]
 </script>

@@ -587,6 +587,7 @@ const documentResource = createDocumentResource({
 	},
 })
 
+
 const docPermissions = createResource({
 	url: "frappe.client.get_doc_permissions",
 })

@@ -123,6 +123,23 @@
 		/>
 
 		<!-- Time -->
+		 <!-- FIXME: default timepicker has poor UI -->
+		 <input v-else-if="props.fieldtype === 'Time'"
+		 type="time"
+		 v-model="time"
+		 :value="formatTimeValue(modelValue)"
+		 step="1"
+		 :placeholder="`Select ${props.label}`"
+		 @input="(e) => emit('update:modelValue', e.target.value)"
+		 @change="(e) => emit('change', e.target.value)"
+		 v-bind="$attrs"
+		 :disabled="isReadOnly"
+		 class="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+		 />
+		<!-- <div v-else-if="props.fieldtype === 'Time'" class="flex flex-col">
+			<span class="text-xs text-gray-500 mt-1">Format: {{modelValue}}</span>
+		</div> -->
+
 		<!-- Datetime -->
 
 		<ErrorMessage :message="props.errorMessage" />
@@ -223,6 +240,8 @@ function setDefaultValue() {
 			emit("update:modelValue", props.default === "1" ? true : false)
 		} else if (props.fieldtype === "Date" && props.default === "Today") {
 			emit("update:modelValue", dayjs().format("YYYY-MM-DD"))
+		} else if (props.fieldtype === "Time" && props.default === "Now") {
+			emit("update:modelValue", dayjs().format("HH:mm:ss"))
 		} else if (isNumberType.value) {
 			emit("update:modelValue", parseFloat(props.default || 0))
 		} else {
@@ -233,6 +252,15 @@ function setDefaultValue() {
 			? emit("update:modelValue", false)
 			: emit("update:modelValue", "")
 	}
+
+}
+
+function formatTimeValue(modelValue) {
+  console.log("Time modelValue input value:", modelValue);
+  console.log("Time modelValue input type:", typeof modelValue);
+//   if (!modelValue) return "";
+//   const timeString = modelValue.toString();
+  return modelValue;
 }
 
 const updateLinkFieldOptions = debounce((query) => {

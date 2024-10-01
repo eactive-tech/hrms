@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "Prompt",
  "creation": "2020-03-17 16:50:35.564915",
  "doctype": "DocType",
@@ -108,7 +109,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2023-04-30 15:01:22.706198",
+ "modified": "2024-09-09 16:45:45.216323",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Income Tax Slab",

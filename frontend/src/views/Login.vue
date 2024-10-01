@@ -3,32 +3,21 @@
 		<ion-content class="ion-padding">
 			<div class="flex h-screen w-screen flex-col justify-center bg-white">
 				<div class="flex flex-col mx-auto gap-3 items-center">
-					<FrappeHRLogo class="h-8 w-8" />
+					<ion-img class="h-8 w-8" src="https://nghrms.realgroup.org/files/clear%20logo.png"
+						alt="Real Group Logo"></ion-img>
+					<!-- <FrappeHRLogo class="h-8 w-8" /> -->
 					<div class="text-3xl font-semibold text-gray-900 text-center">
-						Login to Frappe HR
+						Login to REAL Group HRMS
 					</div>
 				</div>
 
 				<div class="mx-auto mt-10 w-full px-8 sm:w-96">
 					<form class="flex flex-col space-y-4" @submit.prevent="submit">
-						<Input
-							label="Email"
-							placeholder="johndoe@mail.com"
-							v-model="email"
-							:type="email !== 'Administrator' ? 'email' : 'text'"
-						/>
-						<Input
-							label="Password"
-							type="password"
-							placeholder="••••••"
-							v-model="password"
-						/>
+						<Input placeholder="UID/Email" v-model="email" />
+						<Input type="password" placeholder="••••••" v-model="password" />
 						<ErrorMessage :message="session.login.error" />
-						<Button
-							:loading="session.login.loading"
-							variant="solid"
-							class="disabled:bg-gray-700 disabled:text-white !mt-6"
-						>
+						<Button :loading="session.login.loading" variant="solid"
+							class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d">
 							Login
 						</Button>
 					</form>
@@ -39,7 +28,7 @@
 </template>
 
 <script setup>
-import { IonPage, IonContent } from "@ionic/vue"
+import { IonPage, IonContent, IonImg } from "@ionic/vue"
 import { inject, ref } from "vue"
 import { Input, Button, ErrorMessage } from "frappe-ui"
 

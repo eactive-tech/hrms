@@ -24,7 +24,7 @@
   "date_of_joining",
   "boarding_begins_on",
   "table_for_activity",
-  "activities",
+  "activties",
   "notify_users_by_email",
   "amended_from"
  ],
@@ -135,13 +135,6 @@
    "label": "Onboarding Activities"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "activities",
-   "fieldtype": "Table",
-   "label": "Activities",
-   "options": "Employee Boarding Activity"
-  },
-  {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
@@ -170,11 +163,17 @@
    "fieldtype": "Link",
    "label": "Holiday List",
    "options": "Holiday List"
+  },
+  {
+   "fieldname": "activties",
+   "fieldtype": "Table",
+   "label": "Activties",
+   "options": "Employee Boarding Activity"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2022-01-29 12:33:57.120384",
+ "modified": "2024-08-10 19:06:50.830738",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Onboarding",
