@@ -3,20 +3,23 @@
 		<template #body>
 			<div class="flex flex-col items-center my-7 p-4 gap-7">
 				<CheckInPanel />
-				<div v-if="salary_details.data.length > 0" class="flex flex-row justify-center gap-4 overflow-x-auto py-1 ">
-					<div v-for="item in salary_details.data" class="flex flex-col bg-white border-none rounded-lg drop-shadow-md gap-2 p-4 items-start first:ml-4" >
-						<div class="text-gray-800 font-bold text-base">
+				<div v-if="salary_details.data.length > 0" class="flex flex-row justify-center gap-4 py-1 w-full">
+					<div v-for="item in salary_details.data" class="flex flex-col bg-white border-none rounded-lg drop-shadow-md gap-2 p-4 w-full" >
+						<div class="text-gray-800 font-bold text-base text-center">
 							{{item.month}}
 						</div>
-						<div class="text-gray-800 font-bold text-base">
-							<span class="text-h4">{{item.payment_days}}</span> ({{item.total_working_days}})
+						<div class="text-gray-800 font-bold text-base text-center">
+							<p class="text-2xl font-bold">{{item.payment_days}}<span class="text-sm"> ({{item.total_working_days}})</span></p>
 						</div>
-						<div class="text-gray-600 font-normal text-sm w-24 leading-4">
-							Days Paid
-						</div>
+						<div class="text-gray-600 font-normal text-sm leading-4 text-center">Days Paid</div>
+					</div>
+
+					<div v-for="i in (3 - salary_details.data.length)" class="flex flex-col bg-gray-50 border-none rounded-lg drop-shadow-sm gap-2 p-4 w-full" >
+						<div class="text-gray-800 font-bold text-base text-center">&nbsp;</div>
+						<div class="text-gray-800 font-bold text-base"><p class="text-4xl"><span class="text-sm"></span></p></div>
+						<div class="text-gray-600 font-normal text-sm leading-4 text-center"></div>
 					</div>
 				</div>
-				<EmptyState message="You have no Salary Slip" v-else/>
 				<QuickLinks :items="quickLinks" title="Quick Links" />
 				<RequestPanel />
 			</div>
@@ -44,16 +47,11 @@ const quickLinks = [
 		title: "Request Leave",
 		route: "LeaveApplicationFormView",
 	},
-	{
-		icon: markRaw(ExpenseIcon),
-		title: "Claim an Expense",
-		route: "ExpenseClaimFormView",
-	},
-	{
-		icon: markRaw(EmployeeAdvanceIcon),
-		title: "Request an Advance",
-		route: "EmployeeAdvanceFormView",
-	},
+	// {
+	// 	icon: markRaw(ExpenseIcon),
+	// 	title: "Claim an Expense",
+	// 	route: "ExpenseClaimFormView",
+	// },
 	{
 		icon: markRaw(SalaryIcon),
 		title: "View Salary Slips",
@@ -63,6 +61,16 @@ const quickLinks = [
 		icon: markRaw(LeaveIcon),
 		title: "Attendance Request",
 		route: "AttendanceRequestFormView",
+	},
+	{
+		icon: markRaw(LeaveIcon),
+		title: "View Attendance Request",
+		route: "AttendanceRequestListView",
+	},
+	{
+		icon: markRaw(EmployeeAdvanceIcon),
+		title: "Request an Advance",
+		route: "EmployeeAdvanceFormView",
 	},
 	{
 		icon: markRaw(ExpenseIcon),
