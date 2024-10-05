@@ -14,6 +14,8 @@
 							>
 								<FeatherIcon name="chevron-left" class="h-5 w-5" />
 							</Button>
+							<ion-img class="h-5 w-5 mr-2" src="https://nghrms.realgroup.org/files/clear%20logo.png"
+						alt="Real Group Logo"></ion-img>
 							<h2 class="text-xl font-semibold text-gray-900">Notifications</h2>
 						</div>
 					</header>
