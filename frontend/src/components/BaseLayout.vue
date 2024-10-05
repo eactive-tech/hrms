@@ -5,6 +5,8 @@
 				<div class="flex flex-col bg-white shadow-sm p-4">
 					<div class="flex flex-row justify-between items-center">
 						<div class="flex flex-row items-center gap-2">
+							<ion-img class="h-5 w-5" src="https://nghrms.realgroup.org/files/clear%20logo.png"
+						alt="Real Group Logo"></ion-img>
 							<h2 class="text-xl font-bold" style="color:#1f497d">
 								{{ props.pageTitle }}
 							</h2>
