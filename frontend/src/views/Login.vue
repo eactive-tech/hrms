@@ -10,38 +10,49 @@
 						REAL Group HRMS
 					</div>
 				</div>
+				<div class="rounded-lg border-2 ml-4 mr-4 mt-2 pb-4">
+					<div class="mx-auto mt-10 w-full px-4 sm:w-96">
+						<form class="flex flex-col space-y-4" @submit.prevent="submit" v-if="is_login_with_link == false && is_reset_password == false">
+							<Input placeholder="UID/Email" v-model="email" />
+							<Input type="password" placeholder="••••••" v-model="password" />
+							<ErrorMessage :message="session.login.error" />
+							<div @click="set_reset_password" class="w-full text-right text-sm no-underline hover:underline" variant="ghost">Forgot Password ?</div>
+							<Button :loading="session.login.loading" variant="solid"
+								class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d">
+								Login
+							</Button>
+						</form>
+						<div class="flex flex-col space-y-4" v-if="is_login_with_link == true && is_reset_password == false">
+							<Input placeholder="UID" v-model="uid" />
+							<ErrorMessage :message="session.login.error" />
+							<Button @click="send_link" variant="solid"
+								class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d">
+								Send Login Link
+							</Button>
+						</div>
 
-				<div class="mx-auto mt-10 w-full px-8 sm:w-96">
-					<form class="flex flex-col space-y-4" @submit.prevent="submit" v-if="is_login_with_link == false && is_reset_password == false">
-						<Input placeholder="UID/Email" v-model="email" />
-						<Input type="password" placeholder="••••••" v-model="password" />
-						<ErrorMessage :message="session.login.error" />
-						<div @click="set_reset_password" class="w-full text-right text-sm no-underline hover:underline" variant="ghost">Forgot Password ?</div>
-						<Button :loading="session.login.loading" variant="solid"
-							class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d">
-							Login
+						<Button v-if="is_reset_password == false" variant="solid" @click="set_login_with_link"
+								class="text-gray-700 !mt-6 w-full" style="background: #f3f3f3; color: #525252">
+								{{ login_with_link_button_title}}
 						</Button>
-					</form>
-					<div class="flex flex-col space-y-4" v-if="is_login_with_link == true">
-						<Input placeholder="UID" v-model="uid" />
-						<ErrorMessage :message="session.login.error" />
-						<Button @click="send_link" variant="solid"
-							class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d">
-							Send Login Link
-						</Button>
-					</div>
-					<div class="flex flex-col space-y-4" v-if="is_reset_password == true">
-						<Input placeholder="UID" v-model="uid" />
-						<ErrorMessage :message="session.login.error" />
-						<Button @click="reset_password" variant="solid"
-							class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d">
-							Reset Password
-						</Button>
-					</div>
-					<Button variant="solid" @click="set_login_with_link"
+
+						<div class="flex flex-col space-y-4" v-if="is_reset_password == true && is_login_with_link == false">
+							<Input placeholder="UID" v-model="uid" />
+							<ErrorMessage :message="session.login.error" />
+							<Button @click="reset_password" variant="solid"
+								class="disabled:bg-gray-700 disabled:text-white !mt-6" style="background: #1f497d;">
+								Reset Password
+							</Button>
+							
+						</div>
+
+
+						<Button v-if="is_reset_password==true" @click="set_reset_password" variant="solid"
 							class="text-gray-700 !mt-6 w-full" style="background: #f3f3f3; color: #525252">
-							{{ login_with_link_button_title}}
-					</Button>
+								Back
+						</Button>
+						
+					</div>
 				</div>
 			</div>
 		</ion-content>
