@@ -126,7 +126,6 @@
 		 <!-- FIXME: default timepicker has poor UI -->
 		 <input v-else-if="props.fieldtype === 'Time'"
 		 type="time"
-		 v-model="time"
 		 :value="formatTimeValue(modelValue)"
 		 step="1"
 		 :placeholder="`Select ${props.label}`"
@@ -134,6 +133,7 @@
 		 @change="(e) => emit('change', e.target.value)"
 		 v-bind="$attrs"
 		 :disabled="isReadOnly"
+		 :readonly="isReadOnly"
 		 class="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
 		 />
 		<!-- <div v-else-if="props.fieldtype === 'Time'" class="flex flex-col">
@@ -173,6 +173,8 @@ const props = defineProps({
 		default: true,
 	},
 })
+
+
 
 const emit = defineEmits(["change", "update:modelValue"])
 const dayjs = inject("$dayjs")
@@ -255,12 +257,19 @@ function setDefaultValue() {
 
 }
 
+// function formatTimeValue(modelValue) {
+//   console.log("Time modelValue input value:", modelValue);
+//   console.log("Time modelValue input type:", typeof modelValue);
+// //   if (!modelValue) return "";
+// //   const timeString = modelValue.toString();
+//   return modelValue;
+// }
 function formatTimeValue(modelValue) {
-  console.log("Time modelValue input value:", modelValue);
-  console.log("Time modelValue input type:", typeof modelValue);
-//   if (!modelValue) return "";
-//   const timeString = modelValue.toString();
-  return modelValue;
+	if (!modelValue) return "";
+  // Ensure the modelValue is in the correct format (HH:mm:ss)
+  const timeString = modelValue.toString();
+  const [hours, minutes, seconds] = timeString.split(':');
+  return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${(seconds || '00').padStart(2, '0')}`;
 }
 
 const updateLinkFieldOptions = debounce((query) => {

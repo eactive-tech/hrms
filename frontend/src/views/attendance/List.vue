@@ -34,7 +34,7 @@ const ATTENDANCE_REQUEST_FIELDS = [
 // 	"Cancelled",
 // ]
 
-const STATUS_FILTER_OPTIONS = ["Open", "Approved", "Rejected"]
+const STATUS_FILTER_OPTIONS = ["Open", "Pending at HOD", "Pending at HR", "Rejected by HOD", "Rejected by HR", "Cancelled"]
 const FILTER_CONFIG = [
 	{
 		fieldname: "status",

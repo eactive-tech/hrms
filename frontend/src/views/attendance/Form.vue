@@ -42,6 +42,7 @@ const attendanceRequest = ref({
 })
 
 
+
 // const companyCurrency = computed(() =>
 // 	getCompanyCurrency(attendanceRequest.value.company)
 // )

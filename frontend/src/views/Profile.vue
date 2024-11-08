@@ -61,6 +61,18 @@
 							</div>
 						</div>
 
+						<div class="w-full py-4">
+							<a href="/update-password">
+								<Button
+									variant="outline"
+									theme="blue"
+									class="w-full shadow py-4 mt-5"
+								>
+									Change Password
+								</Button>
+							</a>
+						</div>
+
 						<Button
 							@click="logout"
 							variant="outline"
