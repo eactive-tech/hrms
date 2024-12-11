@@ -140,7 +140,7 @@ const profileLinks = [
 		title: "Employee Details",
 		fields: [
 			"employee_name",
-			"employee_number",
+			"name",
 			"gender",
 			"date_of_birth",
 			"date_of_joining",
@@ -177,7 +177,7 @@ const profileLinks = [
 			"ctc",
 			"payroll_cost_center",
 			"pan_number",
-			"provident_fund_account",
+			"custom_pf_number",
 			"salary_mode",
 			"bank_name",
 			"bank_ac_no",

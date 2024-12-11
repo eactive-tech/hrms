@@ -16,7 +16,7 @@
 
 <script setup>
 import { IonPage, IonContent } from "@ionic/vue"
-import { createResource } from "frappe-ui"
+import { createResource, createDocumentResource } from "frappe-ui"
 import { ref, watch, inject } from "vue"
 
 import FormView from "@/components/FormView.vue"
@@ -124,6 +124,25 @@ watch(
 		setTotalLeaveDays()
 	}
 )
+
+// fetch skip gatepass field from branch
+watch(
+	() => leaveApplication.value.custom_branch,
+	(custom_branch) => setSkipGatePassLeave(custom_branch)
+)
+
+function setSkipGatePassLeave(custom_branch) {
+	// if(!custom_branch) { return }
+	let branch = createDocumentResource({
+		doctype: 'Branch',
+		name: custom_branch,
+		onSuccess(data) {
+			console.log('leave', data)
+			leaveApplication.value.custom_skip_gate_pass = data.custom_skip_gate_pass
+		},
+	})
+
+}
 
 // helper functions
 function getFilteredFields(fields) {

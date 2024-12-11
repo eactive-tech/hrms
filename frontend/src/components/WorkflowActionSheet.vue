@@ -41,12 +41,36 @@
 		@didDismiss="applyWorkflow({ event: $event })"
 	>
 	</ion-action-sheet>
+
+	<Dialog v-model="show_reject_reason_dialog">
+		<template #body-title>
+			<h3>Reason for Rejection</h3>
+		</template>
+		<template #body-content>
+			<Autocomplete
+				:options="reject_reason_list.data"
+				v-model="custom_reason_for_rejection"
+				placeholder="Select reason"
+			/>
+		</template>
+		<template #actions>
+			<Button variant="solid" @click="apply_reject_workflow"> 
+			Reject
+			</Button>
+			<Button
+			class="ml-2"
+			@click="show_reject_reason_dialog = false"
+			>
+			Close
+			</Button>
+		</template>
+	</Dialog>
 </template>
 
 <script setup>
 import { IonActionSheet, modalController } from "@ionic/vue"
 import { computed, ref, onMounted } from "vue"
-import { FeatherIcon } from "frappe-ui"
+import { FeatherIcon, Dialog, Autocomplete, createResource } from "frappe-ui"
 
 const props = defineProps({
 	doc: {
@@ -68,6 +92,10 @@ const emit = defineEmits(["workflow-applied"])
 
 let showActionSheet = ref(false)
 let actions = ref([])
+
+let show_reject_reason_dialog = ref(false)
+let custom_reason_for_rejection = ref('')
+// let reject_reason_list = ref([])
 
 const getTransitions = async () => {
 	const transitions = await props.workflow.getTransitions(props.doc)
@@ -117,13 +145,55 @@ const showTransitions = () => {
 const applyWorkflow = async ({ event = "", workflowAction = "" }) => {
 	const action = workflowAction || event.detail.data?.action
 	if (action) {
-		await props.workflow.applyWorkflow(props.doc, action)
-		modalController.dismiss()
-		emit("workflow-applied")
+		if (action == 'Reject'){
+
+			show_reject_reason_dialog.value = true
+			props.doc.custom_reason_for_rejection = custom_reason_for_rejection._rawValue.value || ""
+			// console.log('props.doc', props.doc)
+			// console.log('custom_reason_for_rejection', custom_reason_for_rejection)
+
+			// await props.workflow.applyWorkflow(props.doc, action)
+			// modalController.dismiss()
+			// emit("workflow-applied")
+		} else {
+			
+			await props.workflow.applyWorkflow(props.doc, action)
+			modalController.dismiss()
+			emit("workflow-applied")
+		}
 	}
 
 	showActionSheet.value = false
 }
+
+function apply_reject_workflow() {
+	props.doc.custom_reason_for_rejection = custom_reason_for_rejection._rawValue.value || ""
+	
+	const update_reject_reason = createResource({
+		url: "hrms.api.update_reject_reason",
+		params: {
+			doc: props.doc
+		},
+		onSuccess(data) {
+			props.workflow.applyWorkflow(props.doc, 'Reject')
+			modalController.dismiss()
+			emit("workflow-applied")
+
+		},
+	}).fetch()
+
+
+}
+
+const reject_reason_list = createResource({
+	url: "hrms.api.get_reject_reason_list",
+	params: {
+		doctype: props.doc.doctype,
+	},
+	auto: true
+})
+
+
 
 onMounted(() => getTransitions())
 </script>

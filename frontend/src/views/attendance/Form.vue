@@ -16,7 +16,7 @@
 
 <script setup>
 import { IonPage, IonContent } from "@ionic/vue"
-import { createResource } from "frappe-ui"
+import { createResource, createDocumentResource } from "frappe-ui"
 import { ref, watch, inject, computed } from "vue"
 
 import FormView from "@/components/FormView.vue"
@@ -101,6 +101,32 @@ watch(
 		}
 	}
 )
+
+// fetch skip gatepass field from branch
+watch(attendanceRequest.value.custom_branch, (newX) => {
+  console.log(`x is ${newX}`)
+})
+
+// fetch skip gatepass field from branch
+watch(
+	() => attendanceRequest.value.custom_branch,
+	(custom_branch) => setSkipGatePassAttendance(custom_branch)
+)
+
+function setSkipGatePassAttendance(custom_branch) {
+	// console.log("custom_branch", custom_branch)
+	// if(!custom_branch) { return }
+	let branch = createDocumentResource({
+		doctype: 'Branch',
+		name: custom_branch,
+		onSuccess(data) {
+			console.log('attendance', data)
+			attendanceRequest.value.custom_skip_gate_pass = data.custom_skip_gate_pass
+		},
+	})
+
+}
+
 
 // helper functions
 function getFilteredFields(fields) {

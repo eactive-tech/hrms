@@ -624,3 +624,23 @@ def get_allowed_states_for_workflow(workflow: dict, user_id: str) -> list[str]:
 	return [
 		transition.state for transition in workflow.transitions if transition.allowed in user_roles
 	]
+
+
+@frappe.whitelist()
+def get_reject_reason_list(doctype) -> list[dict]:
+	current_user = frappe.session.user
+	reasons = frappe.db.sql(f"""
+		SELECT
+			r.name label, r.name value
+		FROM `tabReject Reason` r
+		LEFT JOIN `tabReject Reason Type` t ON r.name = t.parent
+		WHERE
+			t.document_type = '{doctype}'
+	""", as_dict=True)
+	return reasons
+
+@frappe.whitelist()
+def update_reject_reason(doc) -> list[dict]:
+	current_user = frappe.session.user
+	frappe.db.set_value(doc.get("doctype"), doc.get("name"), "custom_reason_for_rejection", doc.get("custom_reason_for_rejection"))
+	return True
